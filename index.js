@@ -16,8 +16,10 @@ app.on('voiceStateUpdate', (oldState, newState) => {
 
     // 유저가 음성 채널에 들어왔을 때 혹은 나갔을 때 실행
     if(oldState.channelID != newState.channelID) {
-        const KST = 9 * 60 * 60 * 1000;
-        const time = new Date(KST);
+        const curr = new Date();
+        const utc = curr.getTime() + (curr.getTimezoneOffset() * 60 * 1000);
+        const kst = 9 * 60 * 60 * 1000;
+        const time = new Date(utc + kst);
         const year = time.getFullYear();
         const month = time.getMonth()+1;
         const date = time.getDate();
