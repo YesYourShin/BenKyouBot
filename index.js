@@ -23,22 +23,21 @@ app.on('voiceStateUpdate', (oldState, newState) => {
                         (time.getDay() == 2) ? "화요일" :
                         (time.getDay() == 3) ? "수요일" :
                         (time.getDay() == 4) ? "목요일" :
-                        (time.getDay() == 5) ? "금요일" : "토요일"
+                        (time.getDay() == 5) ? "금요일" : "토요일";
         const hours = time.getHours();
         const min = time.getMinutes();
         const sec = time.getSeconds();
-        // console.log(now);
 
-
+        // const now = year + "년 " + month + "월 " + date + "일 " + day + " " + hours + "시 " + min + "분 " + sec + "초"; 
         const now = year + "년 " + month + "월 " + date + "일 " + day + " " + hours + "시 " + min + "분 " + sec + "초"; 
         if(newState.channelID) {
-            checkCh.send("예비역 병장 " + name + " 상번 시간 \n" + String(now));
+            checkCh.send(`예비역 병장 ${name} 상번 시간 \n ${now}`);
             console.log('userJoin');
         }
 
         if(!newState.channelID) {
             
-            checkCh.send("예비역 병장 " + name + " 하번 시간 \n" + String(now));
+            checkCh.send(`예비역 병장 ${name} 하번 시간 \n ${now}`);
             console.log('userLeave');
             
         }
