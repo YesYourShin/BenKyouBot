@@ -1,5 +1,7 @@
 require('dotenv').config();
 const token = process.env.TOKEN;
+const chId = process.env.CHANNELID;
+const JinHongId = process.env.JINHONGID;
 const discord = require('discord.js');  // discord.js를 import 해줍니다.
 const app = new discord.Client(); // discord.Client 인스턴스 생성
 const BlockQueue = require('block-queue');
@@ -9,7 +11,7 @@ app.on('ready', () => { // 여기서 사용되는 Arrow Function은 콜백함수
 });
 
 app.on('voiceStateUpdate', (oldState, newState) => {
-    const checkCh = newState.guild.channels.cache.get('884707409229148160');
+    const checkCh = newState.guild.channels.cache.get('chId');
     const name = newState.member.user.username;
 
     // 유저가 음성 채널에 들어왔을 때 혹은 나갔을 때 실행
@@ -28,19 +30,28 @@ app.on('voiceStateUpdate', (oldState, newState) => {
         const min = time.getMinutes();
         const sec = time.getSeconds();
 
+        const id = newState.member.id;
+        console.log(newState.member.id);
         // const now = year + "년 " + month + "월 " + date + "일 " + day + " " + hours + "시 " + min + "분 " + sec + "초"; 
         const now = year + "년 " + month + "월 " + date + "일 " + day + " " + hours + "시 " + min + "분 " + sec + "초"; 
-        if(newState.channelID) {
+        
+        if(id == JinHongId) {
+            if (newState.channelID) {
+                checkCh.send(`${name} 출근 시간 \n ${now}`);
+                console.log('userJoin');
+            } else if (!newState.channelID) {
+                checkCh.send(`${name} 퇴근 시간 \n ${now}`);
+                console.log('userLeave');
+            } 
+        } else if (newState.channelID) {
             checkCh.send(`예비역 병장 ${name} 상번 시간 \n ${now}`);
             console.log('userJoin');
-        }
-
-        if(!newState.channelID) {
-            
+        } else if (!newState.channelID) {
             checkCh.send(`예비역 병장 ${name} 하번 시간 \n ${now}`);
             console.log('userLeave');
-            
         }
+
+        
     }
 
 });
