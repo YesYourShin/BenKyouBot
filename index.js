@@ -11,7 +11,7 @@ app.on('ready', () => { // 여기서 사용되는 Arrow Function은 콜백함수
 });
 
 app.on('voiceStateUpdate', (oldState, newState) => {
-    const checkCh = newState.guild.channels.cache.get('chId');
+    const checkCh = newState.guild.channels.cache.get(chId);
     const name = newState.member.user.username;
 
     // 유저가 음성 채널에 들어왔을 때 혹은 나갔을 때 실행
